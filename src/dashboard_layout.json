@@ -1,0 +1,47 @@
+
+{
+  "dashboard_name": "داشبورد سلامت ۳۶۰ درجه",
+  "layout": {
+    "grid_template": "'health_score health_score' 'critical_alerts upcoming_roadmap' 'kpi_widgets brand_watch'",
+    "widgets": [
+      {
+        "id": "health_score",
+        "type": "score_card",
+        "title": "امتیاز سلامت کسب‌وکار",
+        "data_source": "calculated: (100 - (critical_alerts * 10) - (warning_alerts * 3))"
+      },
+      {
+        "id": "critical_alerts",
+        "type": "alert_list",
+        "title": "هشدارهای بحرانی",
+        "config": {
+          "filter_by_severity": ["critical"]
+        }
+      },
+      {
+        "id": "upcoming_roadmap",
+        "type": "gantt_chart_preview",
+        "title": "نقشه راه پیش رو",
+        "config": {
+          "time_window_days": 90,
+          "max_items": 5
+        }
+      },
+      {
+        "id": "brand_watch",
+        "type": "summary_card",
+        "title": "دیده‌بان برند",
+        "data_source": "crawler:official_gazette_alerts"
+      },
+      {
+        "id": "kpi_widgets",
+        "type": "kpi_group",
+        "title": "شاخص‌های کلیدی",
+        "kpis": [
+          { "id": "pending_invoices", "label": "فاکتورهای در انتظار تایید" },
+          { "id": "license_expiry", "label": "روز تا انقضای مجوز اصلی" }
+        ]
+      }
+    ]
+  }
+}

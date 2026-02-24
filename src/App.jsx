@@ -1,30 +1,76 @@
 import { Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
+import { Container } from '@mui/material';
 import Home from './pages/Home';
-import Accounting from './pages/Accounting';
-import Services from './pages/Services';
-import Customers from './pages/Customers';
-import CompetitorAnalysis from './pages/CompetitorAnalysis';
-import GovPort from './pages/GovPort';
-import KeywordMonitoring from './pages/KeywordMonitoring';
-import Employees from './pages/Employees';
-import Reports from './pages/Reports';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import OnboardingWizard from './pages/Onboarding/OnboardingWizard';
+import Financials from './pages/Financials'; // Import the new Financials page
+import Watchdog from './pages/Watchdog';
+import Header from './components/Header'; // Import the Header
+import { AppProvider } from './context/AppContext.jsx';
+import ProtectedRoute from './components/ProtectedRoute';
+
+// A layout component that includes the header and centers the content
+const MainLayout = ({ children }) => (
+  <>
+    <Header />
+    <Container maxWidth="lg">
+      {children}
+    </Container>
+  </>
+);
 
 function App() {
   return (
-    <Layout>
+    <AppProvider>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/accounting" element={<Accounting />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/customers" element={<Customers />} />
-        <Route path="/competitors" element={<CompetitorAnalysis />} />
-        <Route path="/gov-port" element={<GovPort />} />
-        <Route path="/keyword-monitoring" element={<KeywordMonitoring />} />
-        <Route path="/employees" element={<Employees />} />
-        <Route path="/reports" element={<Reports />} />
+        {/* Public routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Protected routes with the main layout */}
+        <Route 
+          path="/"
+          element={
+            <ProtectedRoute>
+              <MainLayout>
+                <Home />
+              </MainLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path="/onboarding"
+          element={
+            <ProtectedRoute>
+              <MainLayout>
+                <OnboardingWizard />
+              </MainLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path="/financials"
+          element={
+            <ProtectedRoute>
+              <MainLayout>
+                <Financials />
+              </MainLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path="/watchdog"
+          element={
+            <ProtectedRoute>
+              <MainLayout>
+                <Watchdog />
+              </MainLayout>
+            </ProtectedRoute>
+          }
+        />
       </Routes>
-    </Layout>
+    </AppProvider>
   );
 }
 
