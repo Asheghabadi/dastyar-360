@@ -1,0 +1,21 @@
+# Use an official Node.js runtime as a parent image
+FROM node:18
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json directly from the root
+COPY ./package.json ./
+COPY ./package-lock.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the frontend application's code from the root
+COPY . .
+
+# Expose the port the app runs on
+EXPOSE 5173
+
+# Command to run the application, using sh -c to avoid format errors
+CMD ["sh", "-c", "npm run dev -- --host 0.0.0.0"]

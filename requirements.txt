@@ -1,0 +1,9 @@
+    fastapi
+    uvicorn[standard]
+    celery
+    redis
+    psycopg2-binary
+    scrapy
+    cryptography
+    sqlalchemy
+    
