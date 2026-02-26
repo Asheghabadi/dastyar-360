@@ -1,0 +1,100 @@
+
+{
+  "scale_logic": [
+    { "level": 1, "name": "Micro", "description": "اصناف، مالیات مقطوع، جواز کسب" },
+    { "level": 2, "name": "Medium", "description": "سامانه مؤدیان، لیست بیمه، بهین‌یاب، استاندارد" },
+    { "level": 3, "name": "Large", "description": "محیط زیست، قانون کار، حسابرسی رسمی" },
+    { "level": 4, "name": "Mega", "description": "بورس، گمرک، صادرات، تعهدات ارزی" }
+  ],
+  "authority_clusters": [
+    { "id": "S-Cluster", "name": "خوشه صمت", "description": "پروانه بهره‌برداری، سامانه جامع تجارت، بهین‌یاب" },
+    { "id": "J-Cluster", "name": "خوشه جهاد کشاورزی", "description": "تغییر کاربری، نظام مهندسی کشاورزی، دامپزشکی، سهمیه نهاده‌ها" },
+    { "id": "T-Cluster", "name": "خوشه مالی و مالیاتی", "description": "سامانه مؤدیان، ارزش افزوده، پایانه فروشگاهی" },
+    { "id": "L-Cluster", "name": "خوشه رفاه و کار", "description": "تامین اجتماعی، ایمنی و بازرسی کار" },
+    { "id": "H-Cluster", "name": "خوشه بهداشت و استاندارد", "description": "غذا و دارو (سیب سلامت)، سازمان ملی استاندارد" }
+  ],
+  "activity_tree": {
+    "J-Cluster": {
+      "root_name": "کشاورزی",
+      "sub_activities": [
+        {
+          "id": "J_Sub_1",
+          "name": "دام و طیور",
+          "requirements": ["مجوز دامپزشکی", "سهمیه خوراک"],
+          "tasks": [
+            {
+              "task_id": "J1-001",
+              "title": "ثبت آمار ماهانه تولید",
+              "description": "ثبت آمار تولید در سامانه جامع تجارت یا بهین‌یاب جهت جلوگیری از قطع سهمیه‌ها.",
+              "logic_flow": {
+                "trigger": "هر ماه، 5 روز قبل از پایان ماه",
+                "penalty": "قطع فوری سهمیه گازوئیل، نهاده‌های دامی یا مواد پتروشیمی.",
+                "action": {
+                  "type": "link",
+                  "text": "ورود به سامانه جامع تجارت",
+                  "url": "https://www.ntsw.ir/"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "J_Sub_2",
+          "name": "زراعت و باغبانی",
+          "requirements": ["پروانه چاه آب", "سهمیه کود"],
+          "tasks": []
+        },
+        {
+          "id": "J_Sub_3",
+          "name": "صنایع تبدیلی",
+          "requirements": ["مجوز استقرار صمت", "سیب سلامت"],
+          "tasks": []
+        }
+      ]
+    }
+  },
+  "alert_message_structure": {
+    "crisis_level": "critical | warning | info | success",
+    "legal_reference": "string (e.g., ماده 169 قانون مالیات‌های مستقیم)",
+    "financial_impact_usd": "number",
+    "call_to_action_button": {
+      "text": "string",
+      "type": "api_call | external_link",
+      "target": "string (api_endpoint or url)"
+    }
+  },
+  "gantt_chart_tasks": [
+    {
+      "task_id": "TAX-001",
+      "title": "ارسال لیست مالیات حقوق ماهانه",
+      "responsible_body": "سازمان امور مالیاتی",
+      "deadline_rule": "end_of_month",
+      "applies_to_scale": ["Medium", "Large", "Mega"],
+      "applies_to_industry": ["All"]
+    },
+    {
+      "task_id": "INS-001",
+      "title": "ارسال لیست بیمه تامین اجتماعی ماهانه",
+      "responsible_body": "سازمان تامین اجتماعی",
+      "deadline_rule": "end_of_month",
+      "applies_to_scale": ["Medium", "Large", "Mega"],
+      "applies_to_industry": ["All"]
+    },
+    {
+      "task_id": "VAT-001",
+      "title": "ارسال اظهارنامه ارزش افزوده فصلی",
+      "responsible_body": "سازمان امور مالیاتی",
+      "deadline_rule": "15_days_after_season_end",
+      "applies_to_scale": ["Medium", "Large", "Mega"],
+      "applies_to_industry": ["All"]
+    },
+    {
+      "task_id": "REP-001",
+      "title": "ارسال گزارشات فصلی خرید و فروش (ماده 169)",
+      "responsible_body": "سازمان امور مالیاتی",
+      "deadline_rule": "45_days_after_season_end",
+      "applies_to_scale": ["Large", "Mega"],
+      "applies_to_industry": ["All"]
+    }
+  ]
+}
